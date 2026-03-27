@@ -116,6 +116,14 @@
   pointer-events: none;
 }
 
+/* Força a remoção de qualquer ícone de "play/pause" nativo do iOS no vídeo */
+.hero-video::-webkit-media-controls {
+    display: none !important;
+}
+.hero-video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+}
+
 .hero-content {
   z-index: 2;
   max-width: 800px;

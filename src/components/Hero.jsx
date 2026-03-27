@@ -5,12 +5,35 @@ const Hero = () => {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    // Force play on mount to fix mobile Safari/Chrome autoplay quirks
-    if (videoRef.current) {
-      videoRef.current.play().catch(error => {
-        console.log("Autoplay blocked by browser policy on mobile:", error);
-      });
-    }
+    const playVideo = () => {
+      if (videoRef.current) {
+        // Forçar "muted" diretamente no DOM (ignora o atraso do React no mobile)
+        videoRef.current.defaultMuted = true;
+        videoRef.current.muted = true;
+        
+        videoRef.current.play().catch(() => {
+          // Silent catch to prevent console spam
+        });
+      }
+    };
+
+    // Tenta tocar na montagem
+    playVideo();
+
+    // Fallback: se o navegador bloquear, toca no primeiro milissegundo em que o usuário encostar na tela ou rolar
+    const handleInteraction = () => {
+       playVideo();
+       window.removeEventListener('touchstart', handleInteraction);
+       window.removeEventListener('scroll', handleInteraction);
+    };
+    
+    window.addEventListener('touchstart', handleInteraction, { once: true });
+    window.addEventListener('scroll', handleInteraction, { once: true });
+
+    return () => {
+      window.removeEventListener('touchstart', handleInteraction);
+      window.removeEventListener('scroll', handleInteraction);
+    };
   }, []);
 
   return (
@@ -23,6 +46,7 @@ const Hero = () => {
         autoPlay
         loop
         muted
+        defaultMuted
         playsInline
         preload="auto"
       />
