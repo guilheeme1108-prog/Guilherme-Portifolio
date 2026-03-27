@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 
 const Hero = () => {
   const videoRef = useRef(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   useEffect(() => {
     const playVideo = () => {
@@ -11,28 +12,36 @@ const Hero = () => {
         videoRef.current.defaultMuted = true;
         videoRef.current.muted = true;
         
-        videoRef.current.play().catch(() => {
-          // Silent catch to prevent console spam
-        });
+        videoRef.current.play()
+          .then(() => {
+            setIsVideoPlaying(true);
+          })
+          .catch(() => {
+            // Silent catch to prevent console spam
+            setIsVideoPlaying(false);
+          });
       }
     };
 
     // Tenta tocar na montagem
     playVideo();
 
-    // Fallback: se o navegador bloquear, toca no primeiro milissegundo em que o usuário encostar na tela ou rolar
+    // Fallback: se o navegador bloquear, toca no compasso da primeira interação
     const handleInteraction = () => {
        playVideo();
        window.removeEventListener('touchstart', handleInteraction);
        window.removeEventListener('scroll', handleInteraction);
+       window.removeEventListener('click', handleInteraction);
     };
     
     window.addEventListener('touchstart', handleInteraction, { once: true });
     window.addEventListener('scroll', handleInteraction, { once: true });
+    window.addEventListener('click', handleInteraction, { once: true });
 
     return () => {
       window.removeEventListener('touchstart', handleInteraction);
       window.removeEventListener('scroll', handleInteraction);
+      window.removeEventListener('click', handleInteraction);
     };
   }, []);
 
@@ -51,7 +60,13 @@ const Hero = () => {
         preload="auto"
         controls={false}
         disablePictureInPicture
-        style={{ pointerEvents: 'none', userSelect: 'none', outline: 'none' }}
+        style={{ 
+          pointerEvents: 'none', 
+          userSelect: 'none', 
+          outline: 'none',
+          opacity: isVideoPlaying ? 0.4 : 0,
+          transition: 'opacity 1s ease'
+        }}
       />
       
       {/* Overlay Content */}
