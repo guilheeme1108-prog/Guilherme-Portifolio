@@ -49,6 +49,9 @@ const Hero = () => {
         defaultMuted
         playsInline
         preload="auto"
+        controls={false}
+        disablePictureInPicture
+        style={{ pointerEvents: 'none', userSelect: 'none', outline: 'none' }}
       />
       
       {/* Overlay Content */}
