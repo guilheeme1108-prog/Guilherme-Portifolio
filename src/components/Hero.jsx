@@ -1,71 +1,24 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 import { TypeAnimation } from 'react-type-animation';
 
 const Hero = () => {
-  const videoRef = useRef(null);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-
-  useEffect(() => {
-    const playVideo = () => {
-      if (videoRef.current) {
-        // Forçar "muted" diretamente no DOM (ignora o atraso do React no mobile)
-        videoRef.current.defaultMuted = true;
-        videoRef.current.muted = true;
-        
-        videoRef.current.play()
-          .then(() => {
-            setIsVideoPlaying(true);
-          })
-          .catch(() => {
-            // Silent catch to prevent console spam
-            setIsVideoPlaying(false);
-          });
-      }
-    };
-
-    // Tenta tocar na montagem
-    playVideo();
-
-    // Fallback: se o navegador bloquear, toca no compasso da primeira interação
-    const handleInteraction = () => {
-       playVideo();
-       window.removeEventListener('touchstart', handleInteraction);
-       window.removeEventListener('scroll', handleInteraction);
-       window.removeEventListener('click', handleInteraction);
-    };
-    
-    window.addEventListener('touchstart', handleInteraction, { once: true });
-    window.addEventListener('scroll', handleInteraction, { once: true });
-    window.addEventListener('click', handleInteraction, { once: true });
-
-    return () => {
-      window.removeEventListener('touchstart', handleInteraction);
-      window.removeEventListener('scroll', handleInteraction);
-      window.removeEventListener('click', handleInteraction);
-    };
-  }, []);
-
   return (
     <section className="hero-section">
-      {/* Background 3D CPU Video Auto-playing Loop */}
-      <video
-        ref={videoRef}
-        className="hero-video"
-        src="/cpu_anim_keyframe.mp4"
-        autoPlay
-        loop
-        muted
-        defaultMuted
-        playsInline
-        preload="auto"
-        controls={false}
-        disablePictureInPicture
-        style={{ 
-          pointerEvents: 'none', 
-          userSelect: 'none', 
-          outline: 'none',
-          opacity: isVideoPlaying ? 0.4 : 0,
-          transition: 'opacity 1s ease'
+      {/* Background 3D CPU Video - Raw HTML para bypass total dos bugs do React no iOS/Mobile */}
+      <div 
+        dangerouslySetInnerHTML={{
+          __html: `
+            <video
+              class="hero-video"
+              src="/cpu_anim_keyframe.mp4"
+              autoplay
+              loop
+              muted
+              playsinline
+              preload="auto"
+              style="pointer-events: none; user-select: none; outline: none; opacity: 0.4;"
+            ></video>
+          `
         }}
       />
       
