@@ -1,0 +1,102 @@
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --text-primary: #f0f0f0;
+  --text-secondary: #9ca3af;
+  --accent-neon: #00f3ff;
+  --accent-neon-glow: rgba(0, 243, 255, 0.5);
+  --accent-green: #00ff66;
+  --accent-green-glow: rgba(0, 255, 102, 0.5);
+  --accent-purple: #b500ff;
+  
+  --font-mono: 'Fira Code', 'JetBrains Mono', monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: none; /* Custom cursor everywhere */
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+.mono-text {
+  font-family: var(--font-mono);
+}
+
+.neon-text {
+  color: var(--accent-neon);
+  text-shadow: 0 0 10px var(--accent-neon-glow);
+}
+
+.neon-border {
+  border: 1px solid var(--accent-neon);
+  box-shadow: 0 0 10px var(--accent-neon-glow);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-neon);
+}
+
+/* Utilities for sections */
+.section-container {
+  min-height: 100vh;
+  width: 100%;
+  padding: 100px 5%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--accent-neon);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s;
+}
+
+.custom-cursor.hovering {
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border: 2px solid var(--accent-green);
+  box-shadow: 0 0 15px var(--accent-green-glow);
+}
