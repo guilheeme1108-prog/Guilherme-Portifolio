@@ -69,7 +69,7 @@ const Contact = () => {
           </p>
           
           <div className="social-links interactive">
-            <a href="https://github.com/guilhermeseixas" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="GitHub">
+            <a href="https://github.com/guilheeme1108-prog" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="GitHub">
               <GithubIcon size={28} />
             </a>
             <a href="https://instagram.com/seixas_gui" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Instagram">

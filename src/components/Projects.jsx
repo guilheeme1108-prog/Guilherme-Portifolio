@@ -75,7 +75,7 @@ const Projects = () => {
       </div>
       
       <div className="github-more interactive">
-        <a href="https://github.com/guilhermeseixas" target="_blank" rel="noopener noreferrer" className="cta-button primary">
+        <a href="https://github.com/guilheeme1108-prog" target="_blank" rel="noopener noreferrer" className="cta-button primary">
           .verMaisNoGithub()
         </a>
       </div>

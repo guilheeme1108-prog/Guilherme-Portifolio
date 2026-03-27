@@ -110,7 +110,7 @@
   width: 100vw;
   height: 100vh;
   object-fit: cover;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1.1);
   z-index: -1;
   opacity: 0.4; /* dim video behind text */
   pointer-events: none;
