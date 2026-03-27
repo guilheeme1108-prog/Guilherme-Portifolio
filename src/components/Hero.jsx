@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 
 const Hero = () => {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    // Force play on mount to fix mobile Safari/Chrome autoplay quirks
+    if (videoRef.current) {
+      videoRef.current.play().catch(error => {
+        console.log("Autoplay blocked by browser policy on mobile:", error);
+      });
+    }
+  }, []);
+
   return (
     <section className="hero-section">
       {/* Background 3D CPU Video Auto-playing Loop */}
       <video
+        ref={videoRef}
         className="hero-video"
         src="/cpu_anim_keyframe.mp4"
         autoPlay
         loop
         muted
         playsInline
+        preload="auto"
       />
       
       {/* Overlay Content */}
